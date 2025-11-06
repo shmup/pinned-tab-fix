@@ -25,15 +25,15 @@ let lastActiveTab = {
 	"windowId": 0
 };
 
-function setLastActiveTab(id, pinned, windowId) {
-	lastActiveTab.id = id;
-	lastActiveTab.pinned = pinned;
-	lastActiveTab.windowId = windowId;
+function setLastActiveTab(tab) {
+	lastActiveTab.id = tab.id;
+	lastActiveTab.pinned = tab.pinned;
+	lastActiveTab.windowId = tab.windowId;
 }
 
 // initialise lastActiveTab with current active tab as no initial onActivated ist emitted
 browser.tabs.query({active: true, currentWindow: true}).then((activeTabs) => {
-	setLastActiveTab(activeTabs[0].id, activeTabs[0].pinned, activeTabs[0].windowId);
+	setLastActiveTab(activeTabs[0]);
 });
 
 // keep lastActiveTab up to date when user changes tab
@@ -41,7 +41,7 @@ browser.tabs.onActivated.addListener(function(activeInfo) {
 	browser.tabs.get(activeInfo.tabId).then((activeTab) => {
 		// prevent saving tab when its immediately closed again
 		if (activeTab.status == "complete") {
-			setLastActiveTab(activeTab.id, activeTab.pinned, activeTab.windowId);
+			setLastActiveTab(activeTab);
 		}
 	});
 });
@@ -50,10 +50,7 @@ browser.tabs.onUpdated.addListener(function(tabId, changeInfo, tab) {
 	if (tab.active && tab.status === "complete") {
 		// save lastActiveTab when it was not saved by onActivated and it has finished loading
 		// compensate the fact that no onActivated event is emitted when the active tab is pinned
-
-		browser.tabs.get(tabId).then((activeTab) => {
-			setLastActiveTab(activeTab.id, activeTab.pinned, activeTab.windowId);
-		});
+		setLastActiveTab(tab);
 	}
 }, {
 	"properties": ["status", "pinned"]
@@ -66,7 +63,7 @@ browser.windows.onFocusChanged.addListener(function(windowId) {
 	}
 
 	browser.tabs.query({active: true, currentWindow: true}).then((activeTabs) => {
-		setLastActiveTab(activeTabs[0].id, activeTabs[0].pinned, activeTabs[0].windowId);
+		setLastActiveTab(activeTabs[0]);
 	});
 });
 
