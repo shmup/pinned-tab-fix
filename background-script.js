@@ -76,7 +76,7 @@ browser.windows.onFocusChanged.addListener(function(windowId) {
 	});
 });
 
-// when a new tab is opened and the last active tab was pinned, move tab to the right and conditionaly keep it activated
+// when a new tab is opened and the last active tab was pinned, move tab to the right and conditionally keep it activated
 browser.tabs.onCreated.addListener(function(tab) {
 	if (lastActiveTab.pinned && lastActiveTab.windowId === tab.windowId) {
 		browser.tabs.query({
@@ -92,7 +92,7 @@ browser.tabs.onCreated.addListener(function(tab) {
 					// in all cases scroll tab bar to the right
 					browser.tabs.update(tab.id, { active: true }).then(function() {
 						if (loadInBackground) {
-							// conditionaly refocus source tab
+							// conditionally refocus source tab
 							browser.tabs.update(lastActiveTab.id, { active: true });
 						}
 					});

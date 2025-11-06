@@ -34,7 +34,7 @@ Due to limitations in the implementation of Add-ons in Firefox you may see the t
 - Check for "about:newtab" via the url
 
 ### [v2.2.0] (Firefox 48.0 - *)
-- Swich from callbacks to promises
+- Switch from callbacks to promises
 
 ### [v2.1.0] (Firefox 48.0 - Firefox 60.0a1)
 - Always activate new tabs
@@ -44,7 +44,7 @@ Due to limitations in the implementation of Add-ons in Firefox you may see the t
 - Always activate new tabs
 
 ### [v2.0.6] (Firefox 48.0 - Firefox 54.*)
-- Always open links in unpined tabs on the direct right
+- Always open links in unpinned tabs on the direct right
 
 ### [v2.0.5] (Firefox 48.0 - Firefox 54.*)
 - Open links with blank target, on the right
