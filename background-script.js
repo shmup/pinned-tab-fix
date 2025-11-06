@@ -49,12 +49,6 @@ browser.tabs.onActivated.addListener(function(activeInfo) {
 browser.tabs.onUpdated.addListener(function(tabId, changeInfo, tab) {
 	if (tab.active && tab.status === "complete") {
 		// save lastActiveTab when it was not saved by onActivated and it has finished loading
-
-		browser.tabs.get(tabId).then((activeTab) => {
-			setLastActiveTab(activeTab.id, activeTab.pinned, activeTab.windowId);
-		});
-	}
-	else if (tab.active && tab.pinned && tab.status === "complete") {
 		// compensate the fact that no onActivated event is emitted when the active tab is pinned
 
 		browser.tabs.get(tabId).then((activeTab) => {
