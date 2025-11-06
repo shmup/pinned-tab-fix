@@ -1,12 +1,12 @@
-let checkbox = document.getElementById('loadInBackground');
+const checkbox = document.getElementById('loadInBackground');
 
-browser.storage.local.get("loadInBackground").then(function(res) {
+browser.storage.local.get("loadInBackground").then((res) => {
 	if (res.loadInBackground !== undefined) {
 		checkbox.checked = !res.loadInBackground;
 	}
 });
 
-checkbox.addEventListener("click", function(e) {
+checkbox.addEventListener("click", (e) => {
 	browser.storage.local.set({
 		"loadInBackground": !e.target.checked
 	});

@@ -1,7 +1,7 @@
 let loadInBackground = true;
 
 // initialise loadInBackground with the value in storage or set to true
-browser.storage.local.get("loadInBackground").then(function(res) {
+browser.storage.local.get("loadInBackground").then((res) => {
 	if (res.loadInBackground === undefined) {
 		browser.storage.local.set({
 			"loadInBackground": loadInBackground
@@ -12,14 +12,14 @@ browser.storage.local.get("loadInBackground").then(function(res) {
 });
 
 // update loadInBackground when it is changed in the options
-browser.storage.onChanged.addListener(function(changes) {
-	if (changes["loadInBackground"]) {
-		loadInBackground = changes["loadInBackground"].newValue;
+browser.storage.onChanged.addListener((changes) => {
+	if (changes.loadInBackground) {
+		loadInBackground = changes.loadInBackground.newValue;
 	}
 });
 
 // init lastActiveTab
-let lastActiveTab = {
+const lastActiveTab = {
 	"id": 0,
 	"pinned": false,
 	"windowId": 0
@@ -37,16 +37,16 @@ browser.tabs.query({active: true, currentWindow: true}).then((activeTabs) => {
 });
 
 // keep lastActiveTab up to date when user changes tab
-browser.tabs.onActivated.addListener(function(activeInfo) {
+browser.tabs.onActivated.addListener((activeInfo) => {
 	browser.tabs.get(activeInfo.tabId).then((activeTab) => {
 		// prevent saving tab when its immediately closed again
-		if (activeTab.status == "complete") {
+		if (activeTab.status === "complete") {
 			setLastActiveTab(activeTab);
 		}
 	});
 });
 
-browser.tabs.onUpdated.addListener(function(tabId, changeInfo, tab) {
+browser.tabs.onUpdated.addListener((_tabId, _changeInfo, tab) => {
 	if (tab.active && tab.status === "complete") {
 		// save lastActiveTab when it was not saved by onActivated and it has finished loading
 		// compensate the fact that no onActivated event is emitted when the active tab is pinned
@@ -57,7 +57,7 @@ browser.tabs.onUpdated.addListener(function(tabId, changeInfo, tab) {
 });
 
 // update lastActiveTab when focusing a different firefox window
-browser.windows.onFocusChanged.addListener(function(windowId) {
+browser.windows.onFocusChanged.addListener((windowId) => {
 	if (browser.windows.WINDOW_ID_NONE === windowId) {
 		return;
 	}
