@@ -68,20 +68,18 @@ browser.windows.onFocusChanged.addListener(function(windowId) {
 });
 
 // when a new tab is opened and the last active tab was pinned, move tab to the right and conditionally keep it activated
-browser.tabs.onCreated.addListener(function(tab) {
+browser.tabs.onCreated.addListener((tab) => {
 	if (lastActiveTab.pinned && lastActiveTab.windowId === tab.windowId) {
 		browser.tabs.query({
-			"windowId": tab.windowId,
-			"pinned": true
+			windowId: tab.windowId,
+			pinned: true
 		})
-		.then(function(tabs) {
-			if (tab.index == tabs.length || tab.index == tabs.length + 1) {
-				browser.tabs.move(tab.id, {
-					index: -1
-				})
-				.then(function() {
+		.then((pinnedTabs) => {
+			if (tab.index === pinnedTabs.length || tab.index === pinnedTabs.length + 1) {
+				browser.tabs.move(tab.id, { index: -1 })
+				.then(() => {
 					// in all cases scroll tab bar to the right
-					browser.tabs.update(tab.id, { active: true }).then(function() {
+					browser.tabs.update(tab.id, { active: true }).then(() => {
 						if (loadInBackground) {
 							// conditionally refocus source tab
 							browser.tabs.update(lastActiveTab.id, { active: true });
