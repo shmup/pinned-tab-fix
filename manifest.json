@@ -2,16 +2,19 @@
 
   "manifest_version": 2,
   "name": "Pinned Tab Fix",
-  "version": "2.4.0",
+  "version": "2.4.1",
 
   "description": "__MSG_extensionDescription__",
   "homepage_url": "https://github.com/nralbrecht/pinned-tab-fix",
   "default_locale": "en",
 
-  "applications": {
+  "browser_specific_settings": {
     "gecko": {
-      "id": "@pined_tab_fix",
-      "strict_min_version": "61.0"
+      "id": "@pined-tab-fix",
+      "strict_min_version": "61.0",
+      "data_collection_permissions": {
+        "required": ["none"]
+      }
     }
   },
 
