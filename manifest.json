@@ -4,13 +4,13 @@
   "name": "Pinned Tab Fix",
   "version": "2.4.1",
 
-  "description": "__MSG_extensionDescription__",
-  "homepage_url": "https://github.com/nralbrecht/pinned-tab-fix",
+  "description": "moves new tabs opened from a pinned tab to the right end of the tab bar",
+  "homepage_url": "https://github.com/shmup/pinned-tab-fix",
   "default_locale": "en",
 
   "browser_specific_settings": {
     "gecko": {
-      "id": "@pined-tab-fix",
+      "id": "@pinned-tab-fix",
       "strict_min_version": "61.0",
       "data_collection_permissions": {
         "required": ["none"]
